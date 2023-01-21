@@ -4,7 +4,7 @@ export PATH
 #=================================================
 #	System Required: CentOS 7/8,Debian/ubuntu,oraclelinux
 #	Description: BBR+BBRplus+Lotserver
-#	Version: 100.0.1.6
+#	Version: 100.0.1.13
 #	Author: 千影,cx9208,YLX
 #	更新内容及反馈:  https://blog.ylx.me/archives/783.html
 #=================================================
@@ -15,7 +15,7 @@ export PATH
 # SKYBLUE='\033[0;36m'
 # PLAIN='\033[0m'
 
-sh_ver="100.0.1.6"
+sh_ver="100.0.1.13"
 github="raw.githubusercontent.com/ylx2016/Linux-NetSpeed/master"
 
 imgurl=""
@@ -96,7 +96,7 @@ installbbr() {
   elif [[ "${release}" == "ubuntu" || "${release}" == "debian" ]]; then
     if [[ ${bit} == "x86_64" ]]; then
       echo -e "如果下载地址出错，可能当前正在更新，超过半天还是出错请反馈，大陆自行解决污染问题"
-      github_tag=$(curl -s 'https://api.github.com/repos/ylx2016/kernel/releases' | grep 'Ubuntu_Kernel' | grep '_latest_bbr_' | head -n 1 | awk -F '"' '{print $4}' | awk -F '[/]' '{print $8}')
+      github_tag=$(curl -s 'https://api.github.com/repos/ylx2016/kernel/releases' | grep 'Debian_Kernel' | grep '_latest_bbr_' | head -n 1 | awk -F '"' '{print $4}' | awk -F '[/]' '{print $8}')
       github_ver=$(curl -s 'https://api.github.com/repos/ylx2016/kernel/releases' | grep ${github_tag} | grep 'deb' | grep 'headers' | awk -F '"' '{print $4}' | awk -F '[/]' '{print $9}' | awk -F '[-]' '{print $3}' | awk -F '[_]' '{print $1}')
       echo -e "获取的版本号为:${github_ver}"
       kernel_version=$github_ver
@@ -118,7 +118,7 @@ installbbr() {
       dpkg -i linux-headers-d10.deb
     elif [[ ${bit} == "aarch64" ]]; then
       echo -e "如果下载地址出错，可能当前正在更新，超过半天还是出错请反馈，大陆自行解决污染问题"
-      github_tag=$(curl -s 'https://api.github.com/repos/ylx2016/kernel/releases' | grep 'Ubuntu_Kernel' | grep '_arm64_' | grep '_bbr_' | head -n 1 | awk -F '"' '{print $4}' | awk -F '[/]' '{print $8}')
+      github_tag=$(curl -s 'https://api.github.com/repos/ylx2016/kernel/releases' | grep 'Debian_Kernel' | grep '_arm64_' | grep '_bbr_' | head -n 1 | awk -F '"' '{print $4}' | awk -F '[/]' '{print $8}')
       github_ver=$(curl -s 'https://api.github.com/repos/ylx2016/kernel/releases' | grep ${github_tag} | grep 'deb' | grep 'headers' | awk -F '"' '{print $4}' | awk -F '[/]' '{print $9}' | awk -F '[-]' '{print $3}' | awk -F '[_]' '{print $1}')
       echo -e "获取的版本号为:${github_ver}"
       kernel_version=$github_ver
@@ -420,7 +420,7 @@ installxanmod() {
       # sourceforge_xanmod_cacule_file_img=$(curl -s https://sourceforge.net/projects/xanmod/files/releases/cacule/${sourceforge_xanmod_cacule_ver}/ | grep 'linux-image' | head -n 1 | awk -F '"' '{print $2}')
       # sourceforge_xanmod_cacule_file_head=$(curl -s https://sourceforge.net/projects/xanmod/files/releases/cacule/${sourceforge_xanmod_cacule_ver}/ | grep 'linux-headers' | head -n 1 | awk -F '"' '{print $2}')
       echo -e "如果下载地址出错，可能当前正在更新，超过半天还是出错请反馈，大陆自行解决污染问题"
-      github_tag=$(curl -s 'https://api.github.com/repos/ylx2016/kernel/releases' | grep 'Ubuntu_Kernel' | grep '_lts_latest_' | grep 'xanmod' | head -n 1 | awk -F '"' '{print $4}' | awk -F '[/]' '{print $8}')
+      github_tag=$(curl -s 'https://api.github.com/repos/ylx2016/kernel/releases' | grep 'Debian_Kernel' | grep '_lts_latest_' | grep 'xanmod' | head -n 1 | awk -F '"' '{print $4}' | awk -F '[/]' '{print $8}')
       github_ver=$(curl -s 'https://api.github.com/repos/ylx2016/kernel/releases' | grep ${github_tag} | grep 'deb' | grep 'headers' | awk -F '"' '{print $4}' | awk -F '[/]' '{print $9}' | awk -F '[-]' '{print $3}')
       #echo -e "获取的xanmod lts版本号为:${sourceforge_xanmod_lts_ver}"
       echo -e "获取的xanmod lts版本号为:${github_ver}"
@@ -471,15 +471,16 @@ installxanmod() {
 
 #安装bbr2内核 集成到xanmod内核了
 #安装bbrplus 新内核
-#2021.3.15 开始由https://github.com/UJX6N/bbrplus-4.19/releases 替换bbrplusnew
+#2021.3.15 开始由https://github.com/UJX6N/bbrplus-5.19 替换bbrplusnew
 #2021.4.12 地址更新为https://github.com/ylx2016/kernel/releases
 #2021.9.2 再次改为https://github.com/UJX6N/bbrplus
-#2022.9.6 改为https://github.com/UJX6N/bbrplus-4.19/releases
+#2022.9.6 改为https://github.com/UJX6N/bbrplus-5.19
+#2022.12.16 改为https://github.com/UJX6N/bbrplus-5.10
 
 installbbrplusnew() {
-  github_ver_plus=$(curl -s https://api.github.com/repos/UJX6N/bbrplus-4.19/releases | grep /bbrplus-4.19/releases/tag/ | head -1 | awk -F "[/]" '{print $8}' | awk -F "[\"]" '{print $1}')
-  github_ver_plus_num=$(curl -s https://api.github.com/repos/UJX6N/bbrplus-4.19/releases | grep /bbrplus-4.19/releases/tag/ | head -1 | awk -F "[/]" '{print $8}' | awk -F "[\"]" '{print $1}' | awk -F "[-]" '{print $1}')
-  echo -e "获取的UJX6N的bbrplus-6.1.4版本号为:${github_ver_plus}"
+  github_ver_plus=$(curl -s https://api.github.com/repos/UJX6N/bbrplus-5.10/releases | grep /bbrplus-5.10/releases/tag/ | head -1 | awk -F "[/]" '{print $8}' | awk -F "[\"]" '{print $1}')
+  github_ver_plus_num=$(curl -s https://api.github.com/repos/UJX6N/bbrplus-5.10/releases | grep /bbrplus-5.10/releases/tag/ | head -1 | awk -F "[/]" '{print $8}' | awk -F "[\"]" '{print $1}' | awk -F "[-]" '{print $1}')
+  echo -e "获取的UJX6N的bbrplus-6.0.*版本号为:${github_ver_plus}"
   echo -e "如果下载地址出错，可能当前正在更新，超过半天还是出错请反馈，大陆自行解决污染问题"
   echo -e "安装失败这边反馈，内核问题给UJX6N反馈"
   # kernel_version=$github_ver_plus
@@ -498,8 +499,8 @@ installbbrplusnew() {
         #echo -e "获取的版本号为:${github_ver}"
         kernel_version=${github_ver_plus_num}
         detele_kernel_head
-        headurl=$(curl -s 'https://api.github.com/repos/UJX6N/bbrplus-4.19/releases' | grep ${github_ver_plus} | grep 'rpm' | grep 'headers' | grep 'el7' | awk -F '"' '{print $4}')
-        imgurl=$(curl -s 'https://api.github.com/repos/UJX6N/bbrplus-4.19/releases' | grep ${github_ver_plus} | grep 'rpm' | grep -v 'devel' | grep -v 'headers' | grep -v 'Source' | grep 'el7' | awk -F '"' '{print $4}')
+        headurl=$(curl -s 'https://api.github.com/repos/UJX6N/bbrplus-5.10/releases' | grep ${github_ver_plus} | grep 'rpm' | grep 'headers' | grep 'el7' | awk -F '"' '{print $4}')
+        imgurl=$(curl -s 'https://api.github.com/repos/UJX6N/bbrplus-5.10/releases' | grep ${github_ver_plus} | grep 'rpm' | grep -v 'devel' | grep -v 'headers' | grep -v 'Source' | grep 'el7' | awk -F '"' '{print $4}')
 
         headurl=$(check_cn $headurl)
         imgurl=$(check_cn $imgurl)
@@ -522,8 +523,8 @@ installbbrplusnew() {
         #echo -e "获取的版本号为:${github_ver}"
         kernel_version=${github_ver_plus_num}
         detele_kernel_head
-        headurl=$(curl -s 'https://api.github.com/repos/UJX6N/bbrplus-4.19/releases' | grep ${github_ver_plus} | grep 'rpm' | grep 'headers' | grep 'el8' | awk -F '"' '{print $4}')
-        imgurl=$(curl -s 'https://api.github.com/repos/UJX6N/bbrplus-4.19/releases' | grep ${github_ver_plus} | grep 'rpm' | grep -v 'devel' | grep -v 'headers' | grep -v 'Source' | grep 'el8' | awk -F '"' '{print $4}')
+        headurl=$(curl -s 'https://api.github.com/repos/UJX6N/bbrplus-5.10/releases' | grep ${github_ver_plus} | grep 'rpm' | grep 'headers' | grep 'el8.x86_64' | grep 'https' | awk -F '"' '{print $4}')
+        imgurl=$(curl -s 'https://api.github.com/repos/UJX6N/bbrplus-5.10/releases' | grep ${github_ver_plus} | grep 'rpm' | grep -v 'devel' | grep -v 'headers' | grep -v 'Source' | grep 'el8.x86_64' | grep 'https' | awk -F '"' '{print $4}')
 
         headurl=$(check_cn $headurl)
         imgurl=$(check_cn $imgurl)
@@ -546,8 +547,8 @@ installbbrplusnew() {
       #echo -e "获取的版本号为:${github_ver}"
       kernel_version=${github_ver_plus_num}-bbrplus
       detele_kernel_head
-      headurl=$(curl -s 'https://api.github.com/repos/UJX6N/bbrplus-4.19/releases' | grep ${github_ver_plus} | grep 'https' | grep 'amd64.deb' | grep 'headers' | awk -F '"' '{print $4}')
-      imgurl=$(curl -s 'https://api.github.com/repos/UJX6N/bbrplus-4.19/releases' | grep ${github_ver_plus} | grep 'https' | grep 'amd64.deb' | grep 'image' | awk -F '"' '{print $4}')
+      headurl=$(curl -s 'https://api.github.com/repos/UJX6N/bbrplus-5.10/releases' | grep ${github_ver_plus} | grep 'https' | grep 'amd64.deb' | grep 'headers' | awk -F '"' '{print $4}')
+      imgurl=$(curl -s 'https://api.github.com/repos/UJX6N/bbrplus-5.10/releases' | grep ${github_ver_plus} | grep 'https' | grep 'amd64.deb' | grep 'image' | awk -F '"' '{print $4}')
 
       headurl=$(check_cn $headurl)
       imgurl=$(check_cn $imgurl)
@@ -565,8 +566,8 @@ installbbrplusnew() {
       #echo -e "获取的版本号为:${github_ver}"
       kernel_version=${github_ver_plus_num}-bbrplus
       detele_kernel_head
-      headurl=$(curl -s 'https://api.github.com/repos/UJX6N/bbrplus-4.19/releases' | grep ${github_ver_plus} | grep 'https' | grep 'arm64.deb' | grep 'headers' | awk -F '"' '{print $4}')
-      imgurl=$(curl -s 'https://api.github.com/repos/UJX6N/bbrplus-4.19/releases' | grep ${github_ver_plus} | grep 'https' | grep 'arm64.deb' | grep 'image' | awk -F '"' '{print $4}')
+      headurl=$(curl -s 'https://api.github.com/repos/UJX6N/bbrplus-5.10/releases' | grep ${github_ver_plus} | grep 'https' | grep 'arm64.deb' | grep 'headers' | awk -F '"' '{print $4}')
+      imgurl=$(curl -s 'https://api.github.com/repos/UJX6N/bbrplus-5.10/releases' | grep ${github_ver_plus} | grep 'https' | grep 'arm64.deb' | grep 'image' | awk -F '"' '{print $4}')
 
       headurl=$(check_cn $headurl)
       imgurl=$(check_cn $imgurl)
@@ -647,7 +648,8 @@ startlotserver() {
   fi
   #bash <(wget -qO- https://git.io/lotServerInstall.sh) install
   #echo | bash <(wget --no-check-certificate -qO- https://raw.githubusercontent.com/1265578519/lotServer/main/lotServerInstall.sh) install
-  echo | bash <(wget --no-check-certificate -qO- https://raw.githubusercontent.com/fei5seven/lotServer/master/lotServerInstall.sh) install
+  # echo | bash <(wget --no-check-certificate -qO- https://raw.githubusercontent.com/fei5seven/lotServer/master/lotServerInstall.sh) install
+  echo | bash <(wget --no-check-certificate -qO- https://raw.githubusercontent.com/wxlost/lotServer/master/lotServerInstall.sh) install
   sed -i '/advinacc/d' /appex/etc/config
   sed -i '/maxmode/d' /appex/etc/config
   echo -e "advinacc=\"1\"
@@ -860,6 +862,11 @@ optimizing_system_johnrosen1() {
   if [ ! -f "/etc/sysctl.d/99-sysctl.conf" ]; then
     touch /etc/sysctl.d/99-sysctl.conf
   fi
+  sed -i 'net.ipv4.tcp_fack/d' /etc/sysctl.d/99-sysctl.conf
+  sed -i 'net.ipv4.tcp_early_retrans/d' /etc/sysctl.d/99-sysctl.conf
+  sed -i 'net.ipv4.neigh.default.unres_qlen/d' /etc/sysctl.d/99-sysctl.conf
+  sed -i 'net.ipv4.tcp_max_orphans/d' /etc/sysctl.d/99-sysctl.conf
+  sed -i 'net.netfilter.nf_conntrack_buckets/d' /etc/sysctl.d/99-sysctl.conf
   sed -i '/kernel.pid_max/d' /etc/sysctl.d/99-sysctl.conf
   sed -i '/vm.nr_hugepages/d' /etc/sysctl.d/99-sysctl.conf
   sed -i '/net.core.optmem_max/d' /etc/sysctl.d/99-sysctl.conf
@@ -874,7 +881,6 @@ optimizing_system_johnrosen1() {
   sed -i '/net.ipv6.conf.default.disable_ipv6/d' /etc/sysctl.d/99-sysctl.conf
   sed -i '/net.ipv6.conf.lo.disable_ipv6/d' /etc/sysctl.d/99-sysctl.conf
   sed -i '/net.ipv6.conf.all.accept_ra/d' /etc/sysctl.d/99-sysctl.conf
-  sed -i '/net.ipv6.conf.default.accept_ra/d' /etc/sysctl.d/99-sysctl.conf
   sed -i '/net.ipv6.conf.default.accept_ra/d' /etc/sysctl.d/99-sysctl.conf
   sed -i '/net.core.netdev_max_backlog/d' /etc/sysctl.d/99-sysctl.conf
   sed -i '/net.core.netdev_budget/d' /etc/sysctl.d/99-sysctl.conf
@@ -940,8 +946,18 @@ optimizing_system_johnrosen1() {
   sed -i '/net.ipv6.neigh.default.gc_thresh1/d' /etc/sysctl.d/99-sysctl.conf
   sed -i '/net.netfilter.nf_conntrack_max/d' /etc/sysctl.d/99-sysctl.conf
   sed -i '/net.nf_conntrack_max/d' /etc/sysctl.d/99-sysctl.conf
+  sed -i 'net.netfilter.nf_conntrack_tcp_timeout_fin_wait/d' /etc/sysctl.d/99-sysctl.conf
+  sed -i 'net.netfilter.nf_conntrack_tcp_timeout_time_wait/d' /etc/sysctl.d/99-sysctl.conf
+  sed -i 'net.netfilter.nf_conntrack_tcp_timeout_close_wait/d' /etc/sysctl.d/99-sysctl.conf
+  sed -i 'net.netfilter.nf_conntrack_tcp_timeout_established/d' /etc/sysctl.d/99-sysctl.conf
+  sed -i 'fs.inotify.max_user_instances/d' /etc/sysctl.d/99-sysctl.conf
+  sed -i 'fs.inotify.max_user_watches/d' /etc/sysctl.d/99-sysctl.conf
+  sed -i 'net.ipv4.tcp_low_latency/d' /etc/sysctl.d/99-sysctl.conf
 
   cat >'/etc/sysctl.d/99-sysctl.conf' <<EOF
+net.ipv4.tcp_fack = 1
+net.ipv4.tcp_early_retrans = 3
+net.ipv4.neigh.default.unres_qlen=10000  
 net.ipv4.conf.all.route_localnet=1
 net.ipv4.ip_forward = 1
 net.ipv4.conf.all.forwarding = 1
@@ -986,7 +1002,7 @@ net.ipv4.tcp_tw_reuse = 0
 net.ipv4.tcp_fin_timeout = 15
 net.ipv4.ip_local_port_range = 1024 65535
 net.ipv4.tcp_max_tw_buckets = 5000
-net.ipv4.tcp_fastopen = 4
+#net.ipv4.tcp_fastopen = 3
 net.ipv4.tcp_rmem = 4096 87380 67108864
 net.ipv4.tcp_wmem = 4096 65536 67108864
 net.ipv4.udp_rmem_min = 8192
@@ -1022,7 +1038,7 @@ net.ipv4.tcp_low_latency = 1
 EOF
   sysctl -p
   sysctl --system
-  echo madvise >/sys/kernel/mm/transparent_hugepage/enabled
+  echo always >/sys/kernel/mm/transparent_hugepage/enabled
 
   cat >'/etc/systemd/system.conf' <<EOF
 [Manager]
@@ -1035,7 +1051,7 @@ DefaultLimitNPROC=infinity
 DefaultTasksMax=infinity
 EOF
 
-  cat > '/etc/security/limits.conf' << EOF
+  cat >'/etc/security/limits.conf' <<EOF
 root     soft   nofile    1000000
 root     hard   nofile    1000000
 root     soft   nproc     unlimited
@@ -1053,13 +1069,11 @@ root     soft   memlock   unlimited
 *     hard   memlock   unlimited
 *     soft   memlock   unlimited
 EOF
-  if grep -q "ulimit" /etc/profile; then
-    :
-  else
-    sed -i '/ulimit -SHn/d' /etc/profile
-    sed -i '/ulimit -SHu/d' /etc/profile
-    echo "ulimit -SHn 1000000" >> /etc/profile
-  fi
+
+  sed -i '/ulimit -SHn/d' /etc/profile
+  sed -i '/ulimit -SHu/d' /etc/profile
+  echo "ulimit -SHn 1000000" >>/etc/profile
+
   if grep -q "pam_limits.so" /etc/pam.d/common-session; then
     :
   else
@@ -1071,15 +1085,15 @@ EOF
 }
 
 optimizing_ddcc() {
-sed -i '/net.ipv4.conf.all.rp_filter/d' /etc/sysctl.d/99-sysctl.conf
-sed -i '/net.ipv4.tcp_syncookies/d' /etc/sysctl.d/99-sysctl.conf
-sed -i '/net.ipv4.tcp_max_syn_backlog/d' /etc/sysctl.d/99-sysctl.conf
+  sed -i '/net.ipv4.conf.all.rp_filter/d' /etc/sysctl.d/99-sysctl.conf
+  sed -i '/net.ipv4.tcp_syncookies/d' /etc/sysctl.d/99-sysctl.conf
+  sed -i '/net.ipv4.tcp_max_syn_backlog/d' /etc/sysctl.d/99-sysctl.conf
 
-echo "net.ipv4.conf.all.rp_filter = 1" >> /etc/sysctl.d/99-sysctl.conf
-echo "net.ipv4.tcp_syncookies = 1" >> /etc/sysctl.d/99-sysctl.conf
-echo "net.ipv4.tcp_max_syn_backlog = 1024" >> /etc/sysctl.d/99-sysctl.conf
-sysctl -p
-sysctl --system
+  echo "net.ipv4.conf.all.rp_filter = 1" >>/etc/sysctl.d/99-sysctl.conf
+  echo "net.ipv4.tcp_syncookies = 1" >>/etc/sysctl.d/99-sysctl.conf
+  echo "net.ipv4.tcp_max_syn_backlog = 1024" >>/etc/sysctl.d/99-sysctl.conf
+  sysctl -p
+  sysctl --system
 }
 
 #更新脚本
@@ -1150,10 +1164,14 @@ openipv6() {
   sed -i '/net.ipv6.conf.all.disable_ipv6/d' /etc/sysctl.conf
   sed -i '/net.ipv6.conf.default.disable_ipv6/d' /etc/sysctl.conf
   sed -i '/net.ipv6.conf.lo.disable_ipv6/d' /etc/sysctl.conf
+  sed -i '/net.ipv6.conf.all.accept_ra/d' /etc/sysctl.conf
+  sed -i '/net.ipv6.conf.default.accept_ra/d' /etc/sysctl.conf
 
   echo "net.ipv6.conf.all.disable_ipv6 = 0
 net.ipv6.conf.default.disable_ipv6 = 0
-net.ipv6.conf.lo.disable_ipv6 = 0" >>/etc/sysctl.d/99-sysctl.conf
+net.ipv6.conf.lo.disable_ipv6 = 0
+net.ipv6.conf.all.accept_ra = 2
+net.ipv6.conf.default.accept_ra = 2" >>/etc/sysctl.d/99-sysctl.conf
   sysctl --system
   echo -e "${Info}开启IPv6结束，可能需要重启！"
 }
@@ -1175,7 +1193,7 @@ start_menu() {
  ${Green_font_prefix}19.${Font_color_suffix} 使用BBRplus+FQ版加速 
  ${Green_font_prefix}20.${Font_color_suffix} 使用Lotserver(锐速)加速 
  ${Green_font_prefix}21.${Font_color_suffix} 系统配置优化	 	${Green_font_prefix}22.${Font_color_suffix} 应用johnrosen1的优化方案
- ${Green_font_prefix}23.${Font_color_suffix} 禁用IPv6	 		${Green_font_prefix}24.${Font_color_suffix} 开启IPv6  
+ ${Green_font_prefix}23.${Font_color_suffix} 禁用IPv6	 		${Green_font_prefix}24.${Font_color_suffix} 开启IPv6
  ${Green_font_prefix}25.${Font_color_suffix} 卸载全部加速	 	${Green_font_prefix}99.${Font_color_suffix} 退出脚本 
 ————————————————————————————————————————————————————————————————" &&
     check_status
@@ -1262,7 +1280,7 @@ start_menu() {
     ;;
   26)
     optimizing_ddcc
-    ;;	
+    ;;
   99)
     exit 1
     ;;
@@ -1300,7 +1318,7 @@ detele_kernel() {
         deb_del=$(dpkg -l | grep linux-image | awk '{print $2}' | grep -v "${kernel_version}" | head -${integer})
         echo -e "开始卸载 ${deb_del} 内核..."
         apt-get purge -y ${deb_del}
-		apt-get autoremove -y
+        apt-get autoremove -y
         echo -e "卸载 ${deb_del} 内核卸载完成，继续..."
       done
       echo -e "内核卸载完毕，继续..."
@@ -1333,7 +1351,7 @@ detele_kernel_head() {
         deb_del=$(dpkg -l | grep linux-headers | awk '{print $2}' | grep -v "${kernel_version}" | head -${integer})
         echo -e "开始卸载 ${deb_del} headers内核..."
         apt-get purge -y ${deb_del}
-		apt-get autoremove -y
+        apt-get autoremove -y
         echo -e "卸载 ${deb_del} 内核卸载完成，继续..."
       done
       echo -e "内核卸载完毕，继续..."
@@ -1342,6 +1360,7 @@ detele_kernel_head() {
     fi
   fi
 }
+
 
 #更新引导
 BBR_grub() {
@@ -1524,7 +1543,6 @@ check_sys() {
     # virtual="Hyper-V"
     # else
     # virtual="Microsoft Virtual Machine"
-    # fi
     # fi
     # else
     # virtual="Dedicated母鸡"
@@ -1809,6 +1827,7 @@ check_sys_Lotsever() {
   fi
 }
 
+
 #检查系统当前状态
 check_status() {
   kernel_version=$(uname -r | awk -F "-" '{print $1}')
@@ -1823,7 +1842,7 @@ check_status() {
     # kernel_status="Lotserver"
   elif [[ ${kernel_version_full} == *4.9.0-4* || ${kernel_version_full} == *4.15.0-30* || ${kernel_version_full} == *4.8.0-36* || ${kernel_version_full} == *3.16.0-77* || ${kernel_version_full} == *3.16.0-4* || ${kernel_version_full} == *3.2.0-4* || ${kernel_version_full} == *4.11.2-1* || ${kernel_version_full} == *2.6.32-504* || ${kernel_version_full} == *4.4.0-47* || ${kernel_version_full} == *3.13.0-29 || ${kernel_version_full} == *4.4.0-47* ]]; then
     kernel_status="Lotserver"
-  elif [[ $(echo ${kernel_version} | awk -F'.' '{print $1}') == "4" ]] && [[ $(echo ${kernel_version} | awk -F'.' '{print $2}') -ge 9 ]] || [[ $(echo ${kernel_version} | awk -F'.' '{print $1}') == "5" ]]; then
+  elif [[ $(echo ${kernel_version} | awk -F'.' '{print $1}') == "4" ]] && [[ $(echo ${kernel_version} | awk -F'.' '{print $2}') -ge 9 ]] || [[ $(echo ${kernel_version} | awk -F'.' '{print $1}') == "5" ]] || [[ $(echo ${kernel_version} | awk -F'.' '{print $1}') == "6" ]]; then
     kernel_status="BBR"
   else
     kernel_status="noinstall"

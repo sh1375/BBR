@@ -1176,38 +1176,47 @@ net.ipv6.conf.default.accept_ra = 2" >>/etc/sysctl.d/99-sysctl.conf
   echo -e "${Info}开启IPv6结束，可能需要重启！"
 }
 
-#开始菜单
+#Start Menu
 start_menu() {
   clear
-  echo && echo -e " TCP加速 一键安装管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix} from blog.ylx.me 母鸡慎用
- ${Green_font_prefix}0.${Font_color_suffix} 升级脚本
- ${Green_font_prefix}9.${Font_color_suffix} 切换到不卸载内核版本	${Green_font_prefix}10.${Font_color_suffix} 切换到一键DD系统脚本
- ${Green_font_prefix}1.${Font_color_suffix} 安装 BBR原版内核
- ${Green_font_prefix}2.${Font_color_suffix} 安装 BBRplus版内核		${Green_font_prefix}5.${Font_color_suffix} 安装 BBRplus新版内核
- ${Green_font_prefix}3.${Font_color_suffix} 安装 Lotserver(锐速)内核	${Green_font_prefix}6.${Font_color_suffix} 安装 xanmod版内核
- ${Green_font_prefix}11.${Font_color_suffix} 使用BBR+FQ加速		${Green_font_prefix}12.${Font_color_suffix} 使用BBR+FQ_PIE加速 
- ${Green_font_prefix}13.${Font_color_suffix} 使用BBR+CAKE加速
- ${Green_font_prefix}14.${Font_color_suffix} 使用BBR2+FQ加速	 	${Green_font_prefix}15.${Font_color_suffix} 使用BBR2+FQ_PIE加速 
- ${Green_font_prefix}16.${Font_color_suffix} 使用BBR2+CAKE加速
- ${Green_font_prefix}17.${Font_color_suffix} 开启ECN	 		${Green_font_prefix}18.${Font_color_suffix} 关闭ECN
- ${Green_font_prefix}19.${Font_color_suffix} 使用BBRplus+FQ版加速 
- ${Green_font_prefix}20.${Font_color_suffix} 使用Lotserver(锐速)加速 
- ${Green_font_prefix}21.${Font_color_suffix} 系统配置优化	 	${Green_font_prefix}22.${Font_color_suffix} 应用johnrosen1的优化方案
- ${Green_font_prefix}23.${Font_color_suffix} 禁用IPv6	 		${Green_font_prefix}24.${Font_color_suffix} 开启IPv6
- ${Green_font_prefix}25.${Font_color_suffix} 卸载全部加速	 	${Green_font_prefix}99.${Font_color_suffix} 退出脚本 
+  echo && echo -e " TCP Acceleration One-click installation management script ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix} from blog.ylx.me hens with caution
+ ${Green_font_prefix}0.${Font_color_suffix} Upgrade script
+ ${Green_font_prefix}9.${Font_color_suffix} switch to not uninstall kernel version
+ ${Green_font_prefix}10.${Font_color_suffix} Switch to one-click DD system script
+ ${Green_font_prefix}1.${Font_color_suffix} Install the original BBR kernel
+ ${Green_font_prefix}2.${Font_color_suffix} Install the BBRplus version of the kernel
+ ${Green_font_prefix}5.${Font_color_suffix} Install the new version of the BBRplus kernel
+ ${Green_font_prefix}3.${Font_color_suffix} Install the Lotserver (sharp speed) kernel
+ ${Green_font_prefix}6.${Font_color_suffix} Install the xanmod version of the kernel
+ ${Green_font_prefix}11.${Font_color_suffix} Accelerate with BBR+FQ
+ ${Green_font_prefix}12.${Font_color_suffix} Use BBR+FQ_PIE to speed up
+ ${Green_font_prefix}13.${Font_color_suffix} Use BBR+CAKE to accelerate
+ ${Green_font_prefix}14.${Font_color_suffix} Accelerate with BBR2+FQ
+ ${Green_font_prefix}15.${Font_color_suffix} Use BBR2+FQ_PIE to speed up
+ ${Green_font_prefix}16.${Font_color_suffix} Use BBR2+CAKE to accelerate
+ ${Green_font_prefix}17.${Font_color_suffix} Enable ECN
+ ${Green_font_prefix}18.${Font_color_suffix} Close ECN
+ ${Green_font_prefix}19.${Font_color_suffix} Use BBRplus+FQ version to accelerate
+ ${Green_font_prefix}20.${Font_color_suffix} Accelerate with Lotserver
+ ${Green_font_prefix}21.${Font_color_suffix} System configuration optimization
+ ${Green_font_prefix}22.${Font_color_suffix} Apply johnrosen1's optimization scheme
+ ${Green_font_prefix}23.${Font_color_suffix} Disable IPv6
+ ${Green_font_prefix}24.${Font_color_suffix} Enable IPv6
+ ${Green_font_prefix}25.${Font_color_suffix} Uninstall all acceleration
+ ${Green_font_prefix}99.${Font_color_suffix} exit script
 ————————————————————————————————————————————————————————————————" &&
     check_status
   get_system_info
-  echo -e " 系统信息: ${Font_color_suffix}$opsy ${Green_font_prefix}$virtual${Font_color_suffix} $arch ${Green_font_prefix}$kern${Font_color_suffix} "
+  echo -e " system message: ${Font_color_suffix}$opsy ${Green_font_prefix}$virtual${Font_color_suffix} $arch ${Green_font_prefix}$kern${Font_color_suffix} "
   if [[ ${kernel_status} == "noinstall" ]]; then
-    echo -e " 当前状态: ${Green_font_prefix}未安装${Font_color_suffix} 加速内核 ${Red_font_prefix}请先安装内核${Font_color_suffix}"
+    echo -e " current status: ${Green_font_prefix}Not Installed${Font_color_suffix} accelerated core ${Red_font_prefix}Please install the kernel first${Font_color_suffix}"
   else
-    echo -e " 当前状态: ${Green_font_prefix}已安装${Font_color_suffix} ${Red_font_prefix}${kernel_status}${Font_color_suffix} 加速内核 , ${Green_font_prefix}${run_status}${Font_color_suffix}"
+    echo -e " current status: ${Green_font_prefix}Installed${Font_color_suffix} ${Red_font_prefix}${kernel_status}${Font_color_suffix} accelerated core , ${Green_font_prefix}${run_status}${Font_color_suffix}"
 
   fi
-  echo -e " 当前拥塞控制算法为: ${Green_font_prefix}${net_congestion_control}${Font_color_suffix} 当前队列算法为: ${Green_font_prefix}${net_qdisc}${Font_color_suffix} "
+  echo -e " The current congestion control algorithm is: ${Green_font_prefix}${net_congestion_control}${Font_color_suffix} The current queue algorithm is: ${Green_font_prefix}${net_qdisc}${Font_color_suffix} "
 
-  read -p " 请输入数字 :" num
+  read -p " Please key in numbers :" num
   case "$num" in
   0)
     Update_Shell
@@ -1286,7 +1295,7 @@ start_menu() {
     ;;
   *)
     clear
-    echo -e "${Error}:请输入正确数字 [0-99]"
+    echo -e "${Error}:Please enter the correct number [0-99]"
     sleep 5s
     start_menu
     ;;

@@ -471,16 +471,15 @@ installxanmod() {
 
 #安装bbr2内核 集成到xanmod内核了
 #安装bbrplus 新内核
-#2021.3.15 开始由https://github.com/UJX6N/bbrplus-5.19 替换bbrplusnew
+#2021.3.15 开始由https://github.com/UJX6N/bbrplus-5.10 替换bbrplusnew
 #2021.4.12 地址更新为https://github.com/ylx2016/kernel/releases
 #2021.9.2 再次改为https://github.com/UJX6N/bbrplus
-#2022.9.6 改为https://github.com/UJX6N/bbrplus-5.19
 #2022.12.16 改为https://github.com/UJX6N/bbrplus-5.10
 
 installbbrplusnew() {
   github_ver_plus=$(curl -s https://api.github.com/repos/UJX6N/bbrplus-5.10/releases | grep /bbrplus-5.10/releases/tag/ | head -1 | awk -F "[/]" '{print $8}' | awk -F "[\"]" '{print $1}')
   github_ver_plus_num=$(curl -s https://api.github.com/repos/UJX6N/bbrplus-5.10/releases | grep /bbrplus-5.10/releases/tag/ | head -1 | awk -F "[/]" '{print $8}' | awk -F "[\"]" '{print $1}' | awk -F "[-]" '{print $1}')
-  echo -e "获取的UJX6N的bbrplus-6.0.*版本号为:${github_ver_plus}"
+  echo -e "获取的UJX6N的bbrplus-5.10版本号为:${github_ver_plus}"
   echo -e "如果下载地址出错，可能当前正在更新，超过半天还是出错请反馈，大陆自行解决污染问题"
   echo -e "安装失败这边反馈，内核问题给UJX6N反馈"
   # kernel_version=$github_ver_plus
@@ -1179,7 +1178,7 @@ net.ipv6.conf.default.accept_ra = 2" >>/etc/sysctl.d/99-sysctl.conf
 #Start Menu
 start_menu() {
   clear
-  echo && echo -e " TCP Acceleration One-click installation management script ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix} from blog.ylx.me hens with caution
+  echo && echo -e " TCP Acceleration One-click installation management script ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix} from blog.ylx.me hens with caution , BBR : 5.10
  ${Green_font_prefix}0.${Font_color_suffix} Upgrade script
  ${Green_font_prefix}9.${Font_color_suffix} switch to not uninstall kernel version
  ${Green_font_prefix}10.${Font_color_suffix} Switch to one-click DD system script
